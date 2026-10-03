@@ -6,6 +6,8 @@ JAZZ_AVG_STEPS = 2.7
 LEAP_SIZE = 7
 JAZZ_LEAP_SHARE = 0.02
 
+SCALE = {0, 2, 4, 5, 7, 9, 11}
+
 CHORDS = [
   {2, 5, 9, 0},   # Dm7:   D F A C
   {7, 11, 2, 5},  # G7:    G B D F

@@ -1,4 +1,4 @@
-from core.music import EIGHTHS_PER_BAR, REST, LOWEST_NOTE, HIGHEST_NOTE, JAZZ_AVG_STEPS, LEAP_SIZE, JAZZ_LEAP_SHARE, CHORDS
+from core.music import EIGHTHS_PER_BAR, REST, LOWEST_NOTE, HIGHEST_NOTE, JAZZ_AVG_STEPS, LEAP_SIZE, JAZZ_LEAP_SHARE, CHORDS, SCALE
 from core.music import Note
 
 def get_breathing_score(notes: list[Note], max_phrase_eighths: int) -> float:
@@ -67,3 +67,24 @@ def get_chord_tone_score(notes: list[Note]) -> float:
     return 0.0
 
   return hits / beats
+
+def get_chromatic_score(notes: list[Note]) -> float:
+  outside = 0
+  correct = 0
+  for i in range(len(notes)):
+    note = notes[i]
+    if note.pitch == REST or note.pitch % 12 in SCALE:
+      continue
+
+    outside += 1
+    if i + 1 >= len(notes):
+      continue
+
+    next_pitch = notes[i + 1].pitch
+    if next_pitch != REST and note.start % 2 == 1 and abs(next_pitch - note.pitch) == 1:
+      correct += 1
+
+  if outside == 0:
+    return 1.0
+
+  return correct / outside
