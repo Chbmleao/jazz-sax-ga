@@ -1,4 +1,4 @@
-from core.music import EIGHTHS_PER_BAR, REST, LOWEST_NOTE, HIGHEST_NOTE, JAZZ_AVG_STEPS
+from core.music import EIGHTHS_PER_BAR, REST, LOWEST_NOTE, HIGHEST_NOTE, JAZZ_AVG_STEPS, LEAP_SIZE, JAZZ_LEAP_SHARE
 from core.music import Note
 
 def get_breathing_score(notes: list[Note], max_phrase_eighths: int) -> float:
@@ -20,17 +20,29 @@ def get_breathing_score(notes: list[Note], max_phrase_eighths: int) -> float:
   return 1 - (overflow / max_overflow)
 
 def get_step_score(notes: list[Note]) -> float:
-  total_steps = 0
+  step_count = 0
+  total_distance = 0
+  total_leaps = 0
   for i in range(1, len(notes)):
     previous_pitch = notes[i - 1].pitch
     current_pitch = notes[i].pitch
 
-    if previous_pitch == REST or current_pitch == REST:
+    if previous_pitch == REST or current_pitch == REST or current_pitch == previous_pitch:
       continue
 
-    total_steps += abs(current_pitch - previous_pitch)
+    distance = abs(current_pitch - previous_pitch)
+    step_count += 1
+    total_distance += distance
+    if distance > LEAP_SIZE:
+      total_leaps += 1
 
-  avg_step = total_steps / (len(notes) - 1)
+  if step_count == 0:
+    return 1.0
+
+  avg_step = total_distance / step_count
   step_score = max(0, 1 - abs(avg_step - JAZZ_AVG_STEPS) / JAZZ_AVG_STEPS)
 
-  return step_score
+  leap_share = total_leaps / step_count
+  leap_score = 1 - max(0, leap_share - JAZZ_LEAP_SHARE) / (1 - JAZZ_LEAP_SHARE)
+
+  return (step_score + leap_score) / 2

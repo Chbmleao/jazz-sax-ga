@@ -3,6 +3,8 @@ LOWEST_NOTE = 44
 HIGHEST_NOTE = 76
 EIGHTHS_PER_BAR = 8
 JAZZ_AVG_STEPS = 2.7
+LEAP_SIZE = 7
+JAZZ_LEAP_SHARE = 0.02
 
 class Note():
   def __init__(self, pitch, start, length):
@@ -18,9 +20,9 @@ def decode(raw_notes):
   while i < len(raw_notes):
     pitch = raw_notes[i]
     length = 1
-    
+
     while (
-      i+1 < len(raw_notes) 
+      i+1 < len(raw_notes)
       and (raw_notes[i+1] == pitch)
       and ((i + 1) % EIGHTHS_PER_BAR != 0)
     ):
