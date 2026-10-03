@@ -1,6 +1,7 @@
 import random
 
 from core.config import Config
+from core.music import REST, LOWEST_NOTE, HIGHEST_NOTE, EIGHTHS_PER_BAR
 
 # Reseeded at the start of every run() so the same seed always gives the same run.
 rng = random.Random()
@@ -17,7 +18,12 @@ class Individual:
     return self.fitness
 
 def generate_random_notes(bars, rest_rate):
-  pass
+  length = bars * EIGHTHS_PER_BAR
+  notes = [
+    REST if rng.random() < rest_rate else rng.randint(LOWEST_NOTE, HIGHEST_NOTE)
+    for _ in range(length)
+  ]
+  return notes
 
 def select_elite(individuals, elite_size):
   pass
