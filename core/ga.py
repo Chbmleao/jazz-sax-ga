@@ -36,6 +36,8 @@ def run (config: Config):
     for individual in individuals:
       individual.evaluate_fitness()
 
+    populations.append(individuals)
+
     elite_individuals = select_elite(individuals, config.elite_size)
 
     new_population = elite_individuals.copy()
@@ -45,5 +47,6 @@ def run (config: Config):
       child = mutate(child, config.mutation_rate, config.mutation_step)
       new_population.append(child)
 
-    populations.append(new_population)
     individuals = new_population
+
+  return populations

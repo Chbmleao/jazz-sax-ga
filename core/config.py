@@ -7,10 +7,10 @@ class Config:
     generations: int = 200,
     elite_size: int = 2,
     mutation_rate: float = 0.05,
-    mutation_step: float = 2,
+    mutation_step: int = 2,
     rest_rate: float = 0.1,
     max_phrase_eights: int = 16,
-    weights: list = [1, 1, 1, 1],           
+    weights: tuple = (1, 1, 1, 1, 1),
   ):
     self.seed = seed
     self.bars = bars
