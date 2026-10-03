@@ -6,6 +6,13 @@ JAZZ_AVG_STEPS = 2.7
 LEAP_SIZE = 7
 JAZZ_LEAP_SHARE = 0.02
 
+CHORDS = [
+  {2, 5, 9, 0},   # Dm7:   D F A C
+  {7, 11, 2, 5},  # G7:    G B D F
+  {0, 4, 7, 11},  # Cmaj7: C E G B
+  {0, 4, 7, 11},  # Cmaj7
+]
+
 class Note():
   def __init__(self, pitch, start, length):
     self.pitch = pitch
