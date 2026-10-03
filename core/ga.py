@@ -43,8 +43,19 @@ def crossover(parent1, parent2):
   child_notes_2 = parent2.notes[:crossover_point] + parent1.notes[crossover_point:]
   return Individual(child_notes_1), Individual(child_notes_2)
 
-def mutate(individual, mutation_rate, mutation_step):
-  pass
+def mutate(individual, mutation_rate, mutation_step, rest_rate):
+  mutated_notes = []
+  for note in individual.notes:
+    if rng.random() < mutation_rate:
+      if rng.random() < rest_rate:
+        mutated_notes.append(REST)
+      else:
+        new_note = note + rng.randint(-mutation_step, mutation_step)
+        mutated_notes.append(max(LOWEST_NOTE, min(HIGHEST_NOTE, new_note)))
+    else:
+      mutated_notes.append(note)
+
+  return Individual(mutated_notes)
 
 def run(config: Config):
   rng.seed(config.seed)
@@ -69,8 +80,8 @@ def run(config: Config):
       parent1, parent2 = select_parents(individuals)
       child1, child2 = crossover(parent1, parent2)
 
-      child1 = mutate(child1, config.mutation_rate, config.mutation_step)
-      child2 = mutate(child2, config.mutation_rate, config.mutation_step)
+      child1 = mutate(child1, config.mutation_rate, config.mutation_step, config.rest_rate)
+      child2 = mutate(child2, config.mutation_rate, config.mutation_step, config.rest_rate)
 
       new_population.append(child1)
       new_population.append(child2)
