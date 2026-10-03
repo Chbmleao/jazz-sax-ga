@@ -6,6 +6,7 @@ from core.music import decode, Note
 from core.rules import get_breathing_score, get_step_score, get_chord_tone_score, get_chromatic_score, get_guide_tone_score
 
 rng = random.Random()
+config = Config()
 
 class Individual:
   def __init__(self, notes):
