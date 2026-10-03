@@ -1,15 +1,22 @@
+import random
+
 from core.config import Config
+
+# Reseeded at the start of every run() so the same seed always gives the same run.
+rng = random.Random()
+
 
 class Individual:
   def __init__(self, notes):
-    self.notes = notes
+    # A tuple so that mutating a child can never alter a genome already saved in the history.
+    self.notes = tuple(notes)
     self.fitness = 0
 
   def evaluate_fitness(self):
     self.fitness = 0
     return self.fitness
 
-def generate_random_notes(bars, notes_range):
+def generate_random_notes(bars, rest_rate):
   pass
 
 def select_elite(individuals, elite_size):
@@ -24,11 +31,12 @@ def crossover(parent1, parent2):
 def mutate(individual, mutation_rate, mutation_step):
   pass
 
-def run (config: Config):
+def run(config: Config):
+  rng.seed(config.seed)
   populations = []
 
   individuals = [
-    Individual(generate_random_notes(config.bars, config.notes_range)) 
+    Individual(generate_random_notes(config.bars, config.rest_rate))
     for _ in range(config.population_size)
   ]
 
