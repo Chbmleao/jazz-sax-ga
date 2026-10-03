@@ -22,3 +22,4 @@ class Config:
     self.rest_rate = rest_rate
     self.max_phrase_eights = max_phrase_eights
     self.weights = weights
+    self.notes_range = (44, 76)
