@@ -5,6 +5,7 @@ from pathlib import Path
 
 from core import ga
 from core.config import Config
+from output.midi import save_midi
 
 def history_to_dict(populations):
   return [
@@ -30,6 +31,12 @@ def main():
 
   save_json(asdict(config), run_dir / "config.json")
   save_json(history_to_dict(populations), run_dir / "history.json")
+
+  midi_dir = run_dir / "midi"
+  midi_dir.mkdir(exist_ok=True)
+  for generation, individuals in enumerate(populations):
+    save_midi(individuals[0].notes, midi_dir / f"gen_{generation:03d}.mid")
+
   print(f"saved {len(populations)} generations to {run_dir}")
 
 if __name__ == "__main__":
