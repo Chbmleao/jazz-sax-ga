@@ -26,7 +26,8 @@ def generate_random_notes(bars, rest_rate):
   return notes
 
 def select_elite(individuals, elite_size):
-  pass
+  individuals_sorted = sorted(individuals, key=lambda ind: ind.fitness, reverse=True)
+  return individuals_sorted[:elite_size]
 
 def select_parents(individuals):
   pass
