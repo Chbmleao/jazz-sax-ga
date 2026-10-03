@@ -33,11 +33,15 @@ def select_parents(individuals):
   weights = [ind.fitness for ind in individuals]
   if sum(weights) == 0:
     return rng.sample(individuals, 2)
-  
+
   return rng.choices(individuals, weights=weights, k=2)
 
 def crossover(parent1, parent2):
-  pass
+  bars = len(parent1.notes) // EIGHTHS_PER_BAR
+  crossover_point = rng.randint(1, bars - 1) * EIGHTHS_PER_BAR
+  child_notes_1 = parent1.notes[:crossover_point] + parent2.notes[crossover_point:]
+  child_notes_2 = parent2.notes[:crossover_point] + parent1.notes[crossover_point:]
+  return Individual(child_notes_1), Individual(child_notes_2)
 
 def mutate(individual, mutation_rate, mutation_step):
   pass
@@ -63,10 +67,14 @@ def run(config: Config):
     new_population = elite_individuals.copy()
     while len(new_population) < config.population_size:
       parent1, parent2 = select_parents(individuals)
-      child = crossover(parent1, parent2)
-      child = mutate(child, config.mutation_rate, config.mutation_step)
-      new_population.append(child)
+      child1, child2 = crossover(parent1, parent2)
 
-    individuals = new_population
+      child1 = mutate(child1, config.mutation_rate, config.mutation_step)
+      child2 = mutate(child2, config.mutation_rate, config.mutation_step)
+
+      new_population.append(child1)
+      new_population.append(child2)
+
+    individuals = new_population[:config.population_size]
 
   return populations
