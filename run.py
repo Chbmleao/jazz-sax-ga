@@ -9,16 +9,16 @@ from core.config import Config
 from output.audio import midi_to_wav
 from output.midi import save_midi
 
-AUDIO_EVERY = 50
+QUARTILES = 4
 
 def history_to_dict(populations):
   return [
-    [
-      {"notes": list(ind.notes), "fitness": ind.fitness, "scores": ind.scores}
-      for ind in individuals
-    ]
-    for individuals in populations
+    {"notes": list(best.notes), "fitness": best.fitness, "scores": best.scores}
+    for best, *_ in populations
   ]
+
+def quartile_generations(total):
+  return [total * q // QUARTILES - 1 for q in range(1, QUARTILES + 1)]
 
 def save_json(data, path):
   with open(path, "w") as f:
@@ -42,12 +42,10 @@ def main():
     shutil.rmtree(directory, ignore_errors=True)
     directory.mkdir()
 
-  last_generation = len(populations) - 1
-  for generation, individuals in enumerate(populations):
-    file_name = f"gen_{generation:03d}"
-    save_midi(individuals[0].notes, midi_dir / f"{file_name}.mid")
-    if generation % AUDIO_EVERY == 0 or generation == last_generation:
-      midi_to_wav(midi_dir / f"{file_name}.mid", audio_dir / f"{file_name}.wav")
+  for generation in quartile_generations(len(populations)):
+    file_name = f"gen_{generation:04d}"
+    save_midi(populations[generation][0].notes, midi_dir / f"{file_name}.mid")
+    midi_to_wav(midi_dir / f"{file_name}.mid", audio_dir / f"{file_name}.wav")
 
   print(f"saved {len(populations)} generations to {run_dir}")
 
