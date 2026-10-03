@@ -49,6 +49,8 @@ def mutate(individual, mutation_rate, mutation_step, rest_rate):
     if rng.random() < mutation_rate:
       if rng.random() < rest_rate:
         mutated_notes.append(REST)
+      elif note == REST:
+        mutated_notes.append(rng.randint(LOWEST_NOTE, HIGHEST_NOTE))
       else:
         new_note = note + rng.randint(-mutation_step, mutation_step)
         mutated_notes.append(max(LOWEST_NOTE, min(HIGHEST_NOTE, new_note)))
