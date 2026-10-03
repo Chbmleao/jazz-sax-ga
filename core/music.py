@@ -15,6 +15,13 @@ CHORDS = [
   {0, 4, 7, 11},  # Cmaj7
 ]
 
+GUIDE_TONES = [
+  {5, 0},   # Dm7:   F C
+  {11, 5},  # G7:    B F
+  {4, 11},  # Cmaj7: E B
+  {4, 11},  # Cmaj7
+]
+
 class Note():
   def __init__(self, pitch, start, length):
     self.pitch = pitch
