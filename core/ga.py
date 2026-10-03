@@ -2,19 +2,30 @@ import random
 
 from core.config import Config
 from core.music import REST, LOWEST_NOTE, HIGHEST_NOTE, EIGHTHS_PER_BAR
+from core.music import decode, Note
+from core.rules import get_breathing_score, get_step_score, get_chord_tone_score, get_chromatic_score, get_guide_tone_score
 
-# Reseeded at the start of every run() so the same seed always gives the same run.
 rng = random.Random()
-
 
 class Individual:
   def __init__(self, notes):
-    # A tuple so that mutating a child can never alter a genome already saved in the history.
     self.notes = tuple(notes)
     self.fitness = 0
+    self.scores = [0, 0, 0, 0, 0]
 
   def evaluate_fitness(self):
-    self.fitness = 0
+    notes = decode(self.notes)
+
+    self.scores = [
+      get_breathing_score(notes, config.max_phrase_eighths),
+      get_step_score(notes),
+      get_chord_tone_score(notes),
+      get_chromatic_score(notes),
+      get_guide_tone_score(notes)
+    ]
+
+    total_score = sum(score * weight for score, weight in zip(self.scores, config.weights))
+    self.fitness = total_score / sum(config.weights)
     return self.fitness
 
 def generate_random_notes(bars, rest_rate):
@@ -59,7 +70,9 @@ def mutate(individual, mutation_rate, mutation_step, rest_rate):
 
   return Individual(mutated_notes)
 
-def run(config: Config):
+def run(new_config: Config):
+  global config
+  config = new_config
   rng.seed(config.seed)
   populations = []
 
