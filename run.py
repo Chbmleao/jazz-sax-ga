@@ -1,11 +1,15 @@
 import json
+import shutil
 import sys
 from dataclasses import asdict
 from pathlib import Path
 
 from core import ga
 from core.config import Config
+from output.audio import midi_to_wav
 from output.midi import save_midi
+
+AUDIO_EVERY = 50
 
 def history_to_dict(populations):
   return [
@@ -33,9 +37,17 @@ def main():
   save_json(history_to_dict(populations), run_dir / "history.json")
 
   midi_dir = run_dir / "midi"
-  midi_dir.mkdir(exist_ok=True)
+  audio_dir = run_dir / "audio"
+  for directory in (midi_dir, audio_dir):
+    shutil.rmtree(directory, ignore_errors=True)
+    directory.mkdir()
+
+  last_generation = len(populations) - 1
   for generation, individuals in enumerate(populations):
-    save_midi(individuals[0].notes, midi_dir / f"gen_{generation:03d}.mid")
+    file_name = f"gen_{generation:03d}"
+    save_midi(individuals[0].notes, midi_dir / f"{file_name}.mid")
+    if generation % AUDIO_EVERY == 0 or generation == last_generation:
+      midi_to_wav(midi_dir / f"{file_name}.mid", audio_dir / f"{file_name}.wav")
 
   print(f"saved {len(populations)} generations to {run_dir}")
 
