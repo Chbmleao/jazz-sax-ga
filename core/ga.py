@@ -30,7 +30,11 @@ def select_elite(individuals, elite_size):
   return individuals_sorted[:elite_size]
 
 def select_parents(individuals):
-  pass
+  weights = [ind.fitness for ind in individuals]
+  if sum(weights) == 0:
+    return rng.sample(individuals, 2)
+  
+  return rng.choices(individuals, weights=weights, k=2)
 
 def crossover(parent1, parent2):
   pass
@@ -51,6 +55,7 @@ def run(config: Config):
     for individual in individuals:
       individual.evaluate_fitness()
 
+    individuals = sorted(individuals, key=lambda ind: ind.fitness, reverse=True)
     populations.append(individuals)
 
     elite_individuals = select_elite(individuals, config.elite_size)
