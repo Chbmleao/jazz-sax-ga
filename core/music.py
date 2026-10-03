@@ -2,6 +2,7 @@ REST = 43
 LOWEST_NOTE = 44
 HIGHEST_NOTE = 76
 EIGHTHS_PER_BAR = 8
+JAZZ_AVG_STEPS = 2.7
 
 class Note():
   def __init__(self, pitch, start, length):
