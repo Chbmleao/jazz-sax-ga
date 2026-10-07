@@ -29,12 +29,16 @@ class Individual:
     self.fitness = total_score / sum(config.weights)
     return self.fitness
 
-def generate_random_notes(bars, rest_rate):
+def generate_random_notes(bars, rest_rate, walk_step):
   length = bars * EIGHTHS_PER_BAR
-  notes = [
-    REST if rng.random() < rest_rate else rng.randint(LOWEST_NOTE, HIGHEST_NOTE)
-    for _ in range(length)
-  ]
+  pitch = rng.randint(LOWEST_NOTE, HIGHEST_NOTE)
+  notes = []
+  for _ in range(length):
+    if rng.random() < rest_rate:
+      notes.append(REST)
+      continue
+    pitch = max(LOWEST_NOTE, min(HIGHEST_NOTE, pitch + rng.randint(-walk_step, walk_step)))
+    notes.append(pitch)
   return notes
 
 def select_elite(individuals, elite_size):
@@ -78,7 +82,7 @@ def run(new_config: Config):
   populations = []
 
   individuals = [
-    Individual(generate_random_notes(config.bars, config.rest_rate))
+    Individual(generate_random_notes(config.bars, config.rest_rate, config.walk_step))
     for _ in range(config.population_size)
   ]
 
