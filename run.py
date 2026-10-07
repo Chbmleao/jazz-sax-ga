@@ -42,7 +42,7 @@ def main():
     shutil.rmtree(directory, ignore_errors=True)
     directory.mkdir()
 
-  for generation in quartile_generations(len(populations)):
+  for generation in [0, *quartile_generations(len(populations))]:
     file_name = f"gen_{generation:04d}"
     save_midi(populations[generation][0].notes, midi_dir / f"{file_name}.mid")
     midi_to_wav(midi_dir / f"{file_name}.mid", audio_dir / f"{file_name}.wav")
