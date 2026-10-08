@@ -31,7 +31,7 @@ Every option in `core/config.py` can be overridden from the command line. Each r
 | `config.json` | Config used |
 | `history.json` | Best individual and mean fitness of each generation |
 | `fitness.png` | Best and mean fitness per generation |
-| `midi/`, `audio/` | Best melody at generations 0, 999, 1999, 2999 and 3999 |
+| `midi/`, `audio/` | Best melody at generations 0, 311, 624, 936 and 1249 |
 
 ## Reproduce the experiments
 

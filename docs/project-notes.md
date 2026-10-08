@@ -12,7 +12,7 @@ From the TP1 PDF (`tp1_geracao_musical_simbolica_1 (1).pdf`):
 | Method | Genetic algorithm. Rule-based fitness is allowed, but every rule must be justified |
 | Style | One style constraint must be applied |
 | Experiments | At least one hyperparameter varied, 3 runs |
-| Deliverables | Code, fitness graph, audio, 2-page ISMIR-style paper |
+| Deliverables | Code, fitness graph, audio, ISMIR-style paper (3 pages for master's students, with a longer related work section) |
 | AI use | Must be declared in the README with links to the conversations. Generating the whole method or the paper with AI is not allowed |
 
 ## 2. Style choice
@@ -125,7 +125,7 @@ limit, the exact formulas, equal weights, `walk_step` 3, the rest rate, and the 
 | seed | 42 |
 | bars | 12 |
 | population_size | 100 |
-| generations | 4000 |
+| generations | 1250 |
 | elite_size | 2 |
 | mutation_rate | 0.05 |
 | mutation_step | 2 |
@@ -168,15 +168,37 @@ the first eighth gets about 57% of the beat.
 
 ### 8.2 Default run (seed 42)
 
-| Generation | Fitness | Scores [breath, step, chord, chromatic, guide] |
-|---|---|---|
-| 0 | 0.568 | [0.88, 0.84, 0.40, 0.26, 0.45] |
-| 999 | 0.873 | |
-| 1999 | 0.907 | |
-| 2999 | 0.923 | |
-| 3999 | 0.935 | [1.00, 0.99, 0.87, 1.00, 0.82] |
+| Generation | Best fitness | Mean fitness | Best scores [breath, step, chord, chromatic, guide] |
+|---|---|---|---|
+| 0 | 0.613 | 0.466 | [0.95, 0.89, 0.50, 0.23, 0.50] |
+| 311 | 0.834 | 0.645 | [1.00, 0.99, 0.72, 0.47, 1.00] |
+| 624 | 0.855 | 0.620 | [1.00, 0.95, 0.72, 0.60, 1.00] |
+| 936 | 0.891 | 0.612 | [1.00, 0.91, 0.82, 0.72, 1.00] |
+| 1249 | 0.933 | 0.653 | [1.00, 0.93, 0.85, 0.88, 1.00] |
 
-A run takes about 29 s and about 20 MB on disk.
+A run takes about 18 MB on disk. The mean fitness stays around 0.6 while the best keeps rising.
+
+### 8.4 Mutation rate experiment
+
+`experiments.sh` runs mutation rate 0.01, 0.05 and 0.2 with seeds 1, 2 and 3 (9 runs, 1250
+generations each, all other parameters at the default). The 9 runs take about 13 s in parallel.
+`compare.py` plots the best fitness averaged over the seeds (`runs/experiments/comparison.png`).
+
+Best fitness at generation 1249:
+
+| mutation_rate | Seed 1 | Seed 2 | Seed 3 | Mean fitness (last generation) |
+|---|---|---|---|---|
+| 0.01 | 0.973 | 0.995 | 0.998 | about 0.85 |
+| 0.05 | 0.961 | 0.958 | 0.926 | about 0.62 |
+| 0.2 | 0.733 | 0.768 | 0.724 | about 0.44 |
+
+- 0.01 is the best: about 0.96 by generation 300 and above 0.97 for every seed at the end.
+- 0.05 keeps improving slowly. In an earlier 4000-generation run it reached 0.98 to 1.0, but
+  only after generation 3600.
+- 0.2 stalls around 0.72 to 0.77. The chromatic score is the weakest (0.33 to 0.44): with that
+  much mutation the GA cannot keep the exact half-step approach notes.
+- Earlier 4000-generation runs showed the end of the curve was flat, so 1250 generations keeps the
+  graph readable. Two 0.01 runs reached 1.0 there; none do at 1250.
 
 ### 8.3 Earlier bug
 
@@ -203,14 +225,12 @@ Output in `runs/<name>/`:
 | File | Content |
 |---|---|
 | `config.json` | Config used |
-| `history.json` | Best individual of each generation: notes, fitness, scores |
-| `midi/gen_XXXX.mid`, `audio/gen_XXXX.wav` | Generations 0, 999, 1999, 2999, 3999 |
+| `history.json` | Best individual (notes, fitness, scores) and mean fitness of each generation |
+| `fitness.png` | Best and mean fitness per generation |
+| `midi/gen_XXXX.mid`, `audio/gen_XXXX.wav` | Generations 0, 311, 624, 936, 1249 |
 
 ## 10. Open issues and remaining work
 
-1. Guide tone score stays at 0.82 from about generation 999 on.
-2. Fitness graph (max and mean per generation). `history.json` only stores the best individual, so
-   the mean needs to be saved too.
-3. Three runs varying one hyperparameter. Suggested: chord tone weight against chromatic weight.
-4. The 2-page ISMIR-style paper.
-5. AI-use declaration in the README with links to the conversations.
+1. The 3-page ISMIR-style paper.
+2. Listen to the final melodies of each mutation rate and describe the differences in the paper.
+   A fitness near 1.0 (mutation 0.01) may still sound repetitive.
