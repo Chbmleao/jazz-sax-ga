@@ -6,4 +6,3 @@ runs/experiments/*/history.json
 runs/experiments/*/audio/*
 !runs/experiments/*/audio/gen_3999.wav
 .venv/
-docs/
