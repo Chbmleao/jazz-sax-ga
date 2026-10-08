@@ -1,7 +1,7 @@
+import argparse
 import json
 import shutil
-import sys
-from dataclasses import asdict
+from dataclasses import asdict, fields, replace
 from pathlib import Path
 
 from core import ga
@@ -24,9 +24,33 @@ def save_json(data, path):
   with open(path, "w") as f:
     json.dump(data, f)
 
+def parse_args():
+  parser = argparse.ArgumentParser(description="Evolve a jazz tenor sax melody with a genetic algorithm.")
+  parser.add_argument("name", nargs="?", default="default", help="output folder inside runs/")
+  default_config = Config()
+  for field in fields(Config):
+    flag = "--" + field.name.replace("_", "-")
+    default = getattr(default_config, field.name)
+    if field.name == "weights":
+      parser.add_argument(flag, type=float, nargs=len(default), help=f"rule weights (default: {' '.join(map(str, default))})")
+    else:
+      parser.add_argument(flag, type=field.type, help=f"default: {default}")
+  return parser.parse_args()
+
+def build_config(args):
+  overrides = {
+    field.name: getattr(args, field.name)
+    for field in fields(Config)
+    if getattr(args, field.name) is not None
+  }
+  if "weights" in overrides:
+    overrides["weights"] = tuple(overrides["weights"])
+  return replace(Config(), **overrides)
+
 def main():
-  name = sys.argv[1] if len(sys.argv) > 1 else "default"
-  config = Config()
+  args = parse_args()
+  name = args.name
+  config = build_config(args)
 
   run_dir = Path("runs") / name
   run_dir.mkdir(parents=True, exist_ok=True)
