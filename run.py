@@ -8,13 +8,19 @@ from core import ga
 from core.config import Config
 from output.audio import midi_to_wav
 from output.midi import save_midi
+from output.plot import plot_fitness
 
 QUARTILES = 4
 
 def history_to_dict(populations):
   return [
-    {"notes": list(best.notes), "fitness": best.fitness, "scores": best.scores}
-    for best, *_ in populations
+    {
+      "notes": list(population[0].notes),
+      "fitness": population[0].fitness,
+      "scores": population[0].scores,
+      "mean_fitness": sum(ind.fitness for ind in population) / len(population),
+    }
+    for population in populations
   ]
 
 def quartile_generations(total):
@@ -58,7 +64,9 @@ def main():
   populations = ga.run(config)
 
   save_json(asdict(config), run_dir / "config.json")
-  save_json(history_to_dict(populations), run_dir / "history.json")
+  history = history_to_dict(populations)
+  save_json(history, run_dir / "history.json")
+  plot_fitness(history, run_dir / "fitness.png")
 
   midi_dir = run_dir / "midi"
   audio_dir = run_dir / "audio"
