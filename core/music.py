@@ -1,6 +1,7 @@
 REST = 43
 LOWEST_NOTE = 44
 HIGHEST_NOTE = 76
+HOLD = HIGHEST_NOTE + 1
 EIGHTHS_PER_BAR = 8
 JAZZ_AVG_STEPS = 2.7
 LEAP_SIZE = 7
@@ -28,25 +29,22 @@ class Note():
     self.start = start
     self.length = length
 
-def decode(raw_notes):
+def decode(raw_notes, merge_repeats=True):
   notes = []
-  start = 0
 
-  i = 0
-  while i < len(raw_notes):
-    pitch = raw_notes[i]
-    length = 1
+  for position, raw in enumerate(raw_notes):
+    pitch = raw
+    if raw == HOLD:
+      pitch = notes[-1].pitch if notes else REST
 
-    while (
-      i+1 < len(raw_notes)
-      and (raw_notes[i+1] == pitch)
-      and ((i + 1) % EIGHTHS_PER_BAR != 0)
-    ):
-      length += 1
-      i += 1
-
-    notes.append(Note(pitch, start, length))
-    start += length
-    i += 1
+    extends_previous = (
+      notes
+      and position % EIGHTHS_PER_BAR != 0
+      and (raw == HOLD or (pitch == notes[-1].pitch and (merge_repeats or pitch == REST)))
+    )
+    if extends_previous:
+      notes[-1].length += 1
+    else:
+      notes.append(Note(pitch, position, 1))
 
   return notes

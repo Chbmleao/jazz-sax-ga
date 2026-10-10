@@ -21,12 +21,12 @@ def position_to_seconds(position, tempo_bpm, swing_ratio):
     seconds += beat_seconds * swing_ratio / (1 + swing_ratio)
   return seconds
 
-def genome_to_midi(genome, tempo_bpm=170, swing_ratio=1.3):
+def genome_to_midi(genome, merge_repeats=True, tempo_bpm=170, swing_ratio=1.3):
   midi = pretty_midi.PrettyMIDI(initial_tempo=tempo_bpm)
   sax = pretty_midi.Instrument(program=SAX_PROGRAM, name="Tenor Sax")
   piano = pretty_midi.Instrument(program=PIANO_PROGRAM, name="Piano")
 
-  for note in decode(genome):
+  for note in decode(genome, merge_repeats):
     if note.pitch == REST:
       continue
     start = position_to_seconds(note.start, tempo_bpm, swing_ratio)
@@ -44,5 +44,5 @@ def genome_to_midi(genome, tempo_bpm=170, swing_ratio=1.3):
   midi.instruments.append(piano)
   return midi
 
-def save_midi(genome, path, tempo_bpm=170, swing_ratio=1.3):
-  genome_to_midi(genome, tempo_bpm, swing_ratio).write(str(path))
+def save_midi(genome, path, merge_repeats=True, tempo_bpm=170, swing_ratio=1.3):
+  genome_to_midi(genome, merge_repeats, tempo_bpm, swing_ratio).write(str(path))

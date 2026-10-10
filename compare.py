@@ -1,5 +1,6 @@
 import json
 import re
+import sys
 from collections import defaultdict
 from pathlib import Path
 
@@ -9,12 +10,11 @@ matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
 
-EXPERIMENTS_DIR = Path("runs") / "experiments"
 RUN_NAME = re.compile(r"mutation_(?P<rate>[\d.]+)_seed_\d+")
 
-def load_best_fitness_by_rate():
+def load_best_fitness_by_rate(experiments_dir):
   runs = defaultdict(list)
-  for run_dir in sorted(EXPERIMENTS_DIR.iterdir()):
+  for run_dir in sorted(experiments_dir.iterdir()):
     match = RUN_NAME.fullmatch(run_dir.name)
     if not match:
       continue
@@ -26,7 +26,8 @@ def average(curves):
   return [sum(values) / len(values) for values in zip(*curves)]
 
 def main():
-  runs = load_best_fitness_by_rate()
+  experiments_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("runs") / "experiments"
+  runs = load_best_fitness_by_rate(experiments_dir)
 
   fig, ax = plt.subplots(figsize=(6, 3.5))
   for rate in sorted(runs):
@@ -38,7 +39,7 @@ def main():
   ax.grid(alpha=0.3)
   ax.legend(loc="lower right")
   fig.tight_layout()
-  path = EXPERIMENTS_DIR / "comparison.png"
+  path = experiments_dir / "comparison.png"
   fig.savefig(path, dpi=200)
   plt.close(fig)
   print(f"saved {path}")
