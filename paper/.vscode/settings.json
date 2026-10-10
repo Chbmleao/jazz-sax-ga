@@ -1,0 +1,11 @@
+{
+  "latex-workshop.latex.recipes": [{ "name": "tectonic", "tools": ["tectonic"] }],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "tectonic",
+      "command": "tectonic",
+      "args": ["--synctex", "--keep-logs", "%DOC%.tex"]
+    }
+  ],
+  "latex-workshop.view.pdf.viewer": "tab"
+}

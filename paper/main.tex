@@ -1,0 +1,46 @@
+% TP1 - Algorithmic Music Composition (UFMG)
+% Official ISMIR 2026 template (https://github.com/ismir/paper_templates, 2026/latex).
+% Limit for graduate students: 3 pages of content. References, AI Usage Statement and
+% Acknowledgments do not count.
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+% Without the "submission" option the author name is shown and line numbers are off.
+% Note: in this mode ismir.sty prints "in Proc. of the 27th Int. Society for Music
+% Information Retrieval Conf." in the first-page footnote. Ask the professor if that is ok.
+\usepackage{ismir}
+\usepackage{amsmath,cite,url}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{booktabs}
+
+\title{A Genetic Algorithm for Jazz Tenor Saxophone Melodies over a ii-V-I Progression}
+
+\oneauthor
+  {Carlos Le\~{a}o}
+  {Universidade Federal de Minas Gerais (UFMG)\\\texttt{your.email@ufmg.br}}
+
+% Used in the copyright notice: abbreviated first name.
+\def\authorname{C. Le\~{a}o}
+
+\sloppy
+
+\begin{document}
+
+\maketitle
+
+\input{sections/abstract}
+\input{sections/introduction}
+\input{sections/related-work}
+\input{sections/methodology}
+\input{sections/results-discussion}
+
+% Not counted in the page limit.
+\input{sections/ai-usage}
+
+% Lists every entry in references.bib, cited or not. Remove once all papers are cited in
+% the text: ISMIR asks that every listed reference is cited.
+\nocite{*}
+\bibliography{references}
+
+\end{document}
