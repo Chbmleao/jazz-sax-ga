@@ -1,1 +1,1 @@
-{"seed": 1, "bars": 12, "population_size": 100, "generations": 1250, "elite_size": 2, "mutation_rate": 0.2, "mutation_step": 2, "rest_rate": 0.1, "walk_step": 3, "max_phrase_eighths": 16, "weights": [1, 1, 1, 1, 1]}
+{"seed": 1, "bars": 12, "population_size": 100, "generations": 1250, "elite_size": 2, "mutation_rate": 0.2, "mutation_step": 2, "rest_rate": 0.2, "hold_rate": 0.1, "walk_step": 3, "max_phrase_eighths": 16, "weights": [1, 1, 1, 1, 1]}
