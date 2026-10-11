@@ -4,6 +4,7 @@ runs/*
 !runs/experiments/
 runs/experiments/*/history.json
 runs/experiments/*/audio/*
+!runs/experiments/*/audio/gen_0000.wav
 !runs/experiments/*/audio/gen_1249.wav
 .venv/
 .vscode/

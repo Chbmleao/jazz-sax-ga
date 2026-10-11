@@ -42,7 +42,7 @@ python compare.py
 
 `experiments.sh` runs 9 full runs in parallel: mutation rate 0.01, 0.05 and 0.2, each with seeds 1, 2 and 3. `compare.py` then plots the best fitness per generation, averaged over the seeds, for each mutation rate (`runs/experiments/comparison.png`).
 
-The repository keeps the config, fitness graph, MIDI files and final WAV of every experiment in `runs/experiments/`. The `history.json` files (about 2 MB each) are not committed, so run `./experiments.sh` again before `compare.py`. Runs are deterministic for a given config.
+The repository keeps the config, fitness graph, MIDI files and the WAV of the first and last generation of every experiment in `runs/experiments/`. The `history.json` files (about 2 MB each) are not committed, so run `./experiments.sh` again before `compare.py`. Runs are deterministic for a given config.
 
 ## AI use
 
