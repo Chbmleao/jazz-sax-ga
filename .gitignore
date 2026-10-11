@@ -8,3 +8,4 @@ runs/experiments/*/audio/*
 !runs/experiments/*/audio/gen_1249.wav
 .venv/
 .vscode/
+!paper.pdf
