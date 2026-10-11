@@ -8,7 +8,7 @@ class Config:
   population_size: int = 100
   generations: int = 1250
   elite_size: int = 2
-  mutation_rate: float = 0.05
+  mutation_rate: float = 0.01
   mutation_step: int = 2
   rest_rate: float = 0.2
   hold_rate: float = 0.1

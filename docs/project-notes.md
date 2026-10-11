@@ -127,7 +127,7 @@ limit, the exact formulas, equal weights, `walk_step` 3, the rest rate, and the 
 | population_size | 100 |
 | generations | 1250 |
 | elite_size | 2 |
-| mutation_rate | 0.05 |
+| mutation_rate | 0.01 |
 | mutation_step | 2 |
 | rest_rate | 0.1 |
 | walk_step | 3 |
