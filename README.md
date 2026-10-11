@@ -48,7 +48,7 @@ The repository keeps the config, fitness graph, MIDI files and the WAV of the fi
 
 I used Claude (Anthropic), through Claude Code, mostly to research music theory. I have little background in music theory, so I asked it to find the rules jazz soloists usually follow and where they come from: chord tones on strong beats, guide tones (3rds and 7ths), chromatic approach notes, and the interval, tempo and swing statistics of the Weimar Jazz Database. `docs/project-notes.md` links each fitness rule to its source. The breathing rule is the exception: its 16-eighth limit is my own choice.
 
-Claude also helped me discuss the fitness design, debug the training (the step score was stuck at 0.29 until I switched to a random-walk initialization) and set up the Python environment. The genetic algorithm code and logic was entire written and designed by me, and the method design, the review of every change and the paper are my own work as well.
+Claude also helped me discuss the fitness design, debug the training (the step score was stuck at 0.29 until I switched to a random-walk initialization) and set up the Python environment. The genetic algorithm code and logic was entire written and designed by me, and the method design, the review of every change and the paper are my own work as well. I also used Claude to help me fix the English syntax and wording of the paper.
 
 - Conversation: [docs/ai-conversation.md](docs/ai-conversation.md)
 - Sources, rules and parameters collected during the conversation: [docs/project-notes.md](docs/project-notes.md)
