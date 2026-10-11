@@ -1,10 +1,3 @@
 \begin{abstract}
-% About 150 words. One or two sentences each:
-% - problem: symbolic melody generation with a genetic algorithm
-% - style constraint: jazz tenor sax, ii-V-I loop in C major (Dm7 | G7 | Cmaj7 | Cmaj7), 12 bars
-% - method: eighth-note genome, rule-based fitness with 5 rules from jazz theory and the
-%   Weimar Jazz Database
-% - experiment: mutation rate 0.01, 0.05, 0.2 with 3 seeds each
-% - main result: 0.01 reaches the highest fitness; 0.2 stalls
-
+This paper presents a genetic algorithm (GA) that composes a jazz tenor saxophone melody over a ii-V-I progression in C major (Dm7 | G7 | Cmaj7 | Cmaj7), played in a loop by a piano. Each melody is an array of integers with one gene per eighth note, where each gene is a MIDI pitch, a rest or a hold. The fitness combines five rules taken from jazz theory and from the Weimar Jazz Database: breathing, step size, chord tones on the beat, chromatic approach notes and guide tones at chord changes. We ran the GA with mutation rates of 0.01, 0.05 and 0.2, with three seeds each. The rate 0.01 reaches a best fitness of 0.999 on all seeds, while 0.2 stalls between 0.64 and 0.70. In an informal listening test, the melodies of the last generation sounded better than those of the first, but some notes still sounded out of place, which shows that following the rules does not guarantee good music.
 \end{abstract}
