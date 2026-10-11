@@ -1,10 +1,6 @@
 \section{Results}\label{sec:results}
 
-\subsection{Experimental Setup}
-
 To study the effect of the mutation rate, we ran the GA with three mutation rates, 0.01, 0.05 and 0.2, each with three random seeds (1, 2 and 3), for a total of 9 runs. All other parameters keep the default values of Table~\ref{tab:params}, so each run evolves a population of 100 melodies of 12 bars for 1250 generations. Each run saves the best melody of generations 0, 311, 624, 936 and 1249 as MIDI and audio files. The code, the MIDI files, the audio of the first and last generation of each run and the script that reproduces the experiment are available at \url{https://github.com/Chbmleao/jazz-sax-ga}.
-
-\subsection{Fitness Evolution}
 
 \begin{figure}
   \centering
@@ -33,7 +29,5 @@ To study the effect of the mutation rate, we ran the GA with three mutation rate
 Figure~\ref{fig:comparison} compares the best fitness of the three mutation rates, and Table~\ref{tab:results} lists the final values. With the same seed, all runs start from the same initial population, with a best fitness close to 0.59.
 
 With mutation rate 0.01, the best fitness grows quickly: it passes 0.95 between generations 186 and 340 and 0.99 by generation 374, and it ends at 0.999 on all three seeds. In the run with seed 1, the mean fitness of the population rises from 0.48 to about 0.8 in the first 300 generations and then stays between 0.76 and 0.86 until the end, while the best fitness already reaches 0.995 by generation 400. In the final melodies, every rule scores 1.0 except the step size, which scores 0.99. With 0.05, the GA improves more slowly and ends between 0.906 and 0.986, and only two of the three seeds pass 0.95, after generation 800. With 0.2, the best fitness stalls between 0.64 and 0.70. Its weakest rule is the chromatic approach, which ends between 0.22 and 0.39, while the breathing rule scores 1.0 for every rate and seed. In all runs, the mean fitness of the population stays well below the best one, and it drops as the mutation rate grows: 0.82 at 0.01, 0.58 at 0.05 and 0.39 at 0.2.
-
-\subsection{Listening}
 
 Since the fitness measures how well a melody follows the rules, and not how good it sounds, we also listened to the generated melodies. For each run, the author compared the best melody of the first generation with the best melody of the last one (generation 1249). In most runs, the melody of the last generation sounded musically better. The melodies of the first generation sounded random, with many notes that did not seem to belong to the song, which made them uncomfortable to hear, and their melodic lines did not move in a way that made sense. In the last generation, the lines made a little more sense. However, some notes still sounded out of place. The chromatic approach rule tries to imitate the notes outside the scale that jazz musicians use, but in our melodies these notes did not sound good and did not convey the feeling of real jazz. This was an informal test, with a single listener who knew which melody came from which generation, so it is only a first indication that the rules lead to better melodies.
