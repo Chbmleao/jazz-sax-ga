@@ -25,3 +25,38 @@ The fitness of a melody combines five rules. Each rule $i$ gives a score $s_i$ i
 
 \subsection{Genetic Operators}
 
+The GA runs the steps below, in this order, with the default values in Table~\ref{tab:params}.
+
+\begin{itemize}
+  \item \emph{Initialization.} Each melody of the first population is a random walk. It starts at a random pitch, and each eighth is a rest with probability 0.2, a hold with probability 0.1, or else the pitch moves by at most 3 semitones. We first tried a uniform random initialization, but it gave a mean interval of about 9 semitones, and the step score got stuck at about 0.29, because a mutation of $\pm 2$ semitones cannot fix leaps that large.
+  \item \emph{Elitism.} The 2 best individuals are copied to the next generation unchanged, so the best fitness never decreases.
+  \item \emph{Selection.} Parents are chosen by roulette wheel, with a probability proportional to their fitness.
+  \item \emph{Crossover.} One-point crossover at a random bar line, which gives two children. Cutting at a bar line keeps each bar intact, so its notes stay aligned with its chord and guide tones.
+  \item \emph{Mutation.} Each eighth of each child mutates with probability 0.01. A mutated eighth becomes a rest (probability 0.2), a hold (0.1), or else its pitch moves by up to $\pm 2$ semitones. A rest or hold that mutates into a pitch gets a random pitch instead.
+  \item \emph{Stopping criterion.} The GA stops after a fixed number of generations (1250).
+\end{itemize}
+
+The best melody is rendered as MIDI, with the tenor saxophone over a piano that plays one voicing per bar, at 170 BPM, the median tempo in the Weimar Jazz Database \cite{pfleiderer2017}, with a swing ratio of 1.3 \cite{corcoran2021}.
+
+\begin{table}
+  \centering
+  \begin{tabular}{lr}
+    \toprule
+    Parameter & Value \\
+    \midrule
+    Population size & 100 \\
+    Generations & 1250 \\
+    Elite size & 2 \\
+    Mutation rate (per eighth) & 0.01 \\
+    Mutation step & $\pm 2$ semitones \\
+    Rest rate & 0.2 \\
+    Hold rate & 0.1 \\
+    Random-walk step & $\pm 3$ semitones \\
+    Max phrase length & 16 eighths \\
+    Rule weights & 1, 1, 1, 1, 1 \\
+    Tempo / swing ratio & 170 BPM / 1.3 \cite{corcoran2021} \\
+    \bottomrule
+  \end{tabular}
+  \caption{Default hyperparameters.}
+  \label{tab:params}
+\end{table}
