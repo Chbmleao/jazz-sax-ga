@@ -1,10 +1,9 @@
 \section{Introduction}\label{sec:introduction}
-% About 1/3 of a column.
-% - Motivation: why generate jazz melodies, why a GA (fitness can encode music theory,
-%   every rule is explainable).
-% - Style constraint (mandatory to state): jazz tenor sax solo over a fixed ii-V-I loop in
-%   C major, 12 bars, 170 BPM, swing applied at playback.
-% - What the system outputs: MIDI, rendered to WAV with FluidSynth.
-% - Contributions in one or two sentences, and where the code and audio are
-%   (\url{https://github.com/Chbmleao/jazz-sax-ga}).
-TODO
+
+Jazz improvisation is spontaneous composition: the musician creates a melody in real time while following the harmony and reacting to the other players. It requires knowledge of harmony and rhythm, and it is also a way for the player to express feelings, moods and intentions.
+
+Despite this freedom, improvisers follow rules. They target chord tones on strong beats, move mostly by small steps, approach notes chromatically and pause to breathe between phrases. Because these rules can be measured, they can be written as a score for a melody, which makes improvisation a natural problem for genetic algorithms (GAs), as shown by early systems such as GenJam \cite{biles1994} and by later work on GA composition \cite{papadopoulos1998}.
+
+Genetic algorithms are stochastic search and optimization methods first proposed by Holland \cite{holland1975}, inspired by Darwin's theory of natural selection \cite{darwin1859}. A GA keeps a population of individuals (candidate solutions), each encoded as a genome, a string of genes. A fitness function scores how well each individual solves the problem. At each generation, the GA selects parents with a probability that grows with their fitness and creates new individuals with crossover, which combines parts of two parents, and mutation, which randomly changes some genes. Over many generations, the population moves toward better solutions.
+
+This paper presents a creative GA that improvises a jazz tenor saxophone melody over a chord progression played in a loop by a piano. The model combines a modified representation scheme with several fitness objectives, so melodies are generated automatically, without human feedback. Since evaluating such subjective work is difficult, the fitness relies on jazz music theory rules. Section~\ref{sec:related} reviews related work, Section~\ref{sec:methodology} describes the method and Section~\ref{sec:results} discusses the results and future work.
