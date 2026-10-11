@@ -1,6 +1,7 @@
 # Evolutionary methods for musical composition
 
 - url: https://homepages.inf.ed.ac.uk/rbf/MY_DAI_OLD_FTP/rp882.pdf
+- cite: \cite{wiggins1998}
 - ga for generation of music
 - addition of domain specific knowledge can enhance the quality and speed of production of GA results
 - conclude GAs are not idal for the simulation of human musical thought, because their operation in no way simulates human behaviour

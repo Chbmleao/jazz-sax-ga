@@ -1,6 +1,7 @@
 # A Genetic Algorithm for Generating Improvised Music 
 
 - url: https://people.cs.nott.ac.uk/pszeo/docs/publications/amuse07.pdf
+- cite: \cite{ozcan2008}
 - Genetic art
 - genetic algorithms
 
